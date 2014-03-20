@@ -31,7 +31,7 @@ namespace WebApp
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void RedirectToHomePage()
         {
-	    //FIX:
+	        //FIX:
             if (Request.Path.StartsWith("/Home/About", StringComparison.OrdinalIgnoreCase))
             {
                 Response.Redirect("/");
