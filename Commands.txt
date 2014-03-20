@@ -1,0 +1,40 @@
+Case of unexplained redirect
+1. Visit http://windbg.local/Home/About
+2. tlist | findstr "w3wp"
+2. cdb.exe -p 1000
+3. .loadby sos clr
+4. !name2ee System.Web.dll!System.Web.HttpResponse.Redirect
+5. .logopen
+6. bp 7ff3 "!ClrStack;g"
+7. g
+8. q
+9. Fix it
+10. Check
+
+Case of high CPU usage
+0. Open W3wp_CPU_Requests_FailedRequests.PerfmonCfg
+1. TinyGet.exe -srv:windbg.local -uri:api/users?userName=u -threads:50 -loop:200
+2. Take Dump C:\Users\Sergey\AppData\Local\Temp\w3wp.DMP
+3. .loadby sos clr
+4. !DumpHeap -stat
+5. !DumpHeap -stat -type Exceptions
+6. !pe addr
+7. Fix it
+8. W3wp_CPU_Requests_FailedRequests_Exceptions.PerfmonCfg
+
+Case of high memory consumption
+BEGIN WITH MEMORY DUMP
+0. Open TaskManager
+1. TinyGet.exe -srv:windbg.local -uri:api/Funds?accountId=100 -threads:20 -loop:10
+2. Take Dump C:\Users\Sergey\AppData\Local\Temp\w3wp.DMP
+3. .loadby sos clr
+4. !DumpHeap -stat
+5. !DumpHeap -stat -type WinDbg
+6. Fix it
+7. Take Dump C:\Users\Sergey\AppData\Local\Temp\w3wp(1).DMP
+8. .loadby sos clr
+9. !DumpHeap -stat
+10. !DumpHeap -stat -type WinDbg
+
+Tips:
+perfmon /sys

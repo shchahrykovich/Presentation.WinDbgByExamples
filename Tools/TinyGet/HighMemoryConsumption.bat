@@ -1,0 +1,1 @@
+TinyGet.exe -srv:windbg.local -uri:api/Funds?accountId=100 -threads:20 -loop:10
